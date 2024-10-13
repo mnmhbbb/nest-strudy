@@ -11,6 +11,7 @@ import {
   ENV_DB_PORT_KEY,
   ENV_DB_USERNAME_KEY,
 } from './common/const/env-keys-const';
+import { PostsModel } from './posts/entities/posts.entity';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import {
       username: process.env[ENV_DB_USERNAME_KEY],
       password: process.env[ENV_DB_PASSWORD_KEY],
       database: process.env[ENV_DB_DATABASE_KEY],
-      entities: [],
+      entities: [PostsModel],
       synchronize: true,
     }),
   ],

@@ -9,7 +9,7 @@ import * as bcrypt from 'bcrypt';
 export class AuthService {
   constructor(
     private readonly jwtService: JwtService,
-    private readonly userService: UsersService,
+    private readonly usersService: UsersService,
   ) {}
 
   signToken(user: Pick<UsersModel, 'email' | 'id'>, isRefreshToken: boolean) {
@@ -39,7 +39,7 @@ export class AuthService {
   async authenticateWithEmailAndPassword(
     user: Pick<UsersModel, 'email' | 'password'>,
   ) {
-    const existingUser = await this.userService.getUserByEmail(user.email);
+    const existingUser = await this.usersService.getUserByEmail(user.email);
     if (!existingUser) {
       throw new UnauthorizedException('존재하지 않는 사용자입니다.');
     }
@@ -63,7 +63,7 @@ export class AuthService {
   ) {
     const hash = await bcrypt.hash(user.password, HASH_ROUNDS);
 
-    const newUser = await this.userService.createUser({
+    const newUser = await this.usersService.createUser({
       ...user,
       password: hash,
     });
